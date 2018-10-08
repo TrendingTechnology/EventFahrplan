@@ -47,7 +47,8 @@ android {
                     'proguard-rules/proguard-project.txt',
                     'proguard-rules/moshi.pro',
                     'proguard-rules/okhttp3.pro',
-                    'proguard-rules/okio.pro'
+                    'proguard-rules/okio.pro',
+                    'proguard-rules/workmanager.pro'
         }
     }
 
@@ -122,6 +123,11 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude "META-INF/proguard/androidx-annotations.pro"
+    }
+
 }
 
 unMock {
@@ -155,6 +161,7 @@ dependencies {
     implementation Libs.preference
     implementation Libs.snackengagePlayrate
     implementation Libs.tracedroid
+    implementation Libs.workManager
 
     testImplementation project(":commons-testing")
     testImplementation Libs.annotation
