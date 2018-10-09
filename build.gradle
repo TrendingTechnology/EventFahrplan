@@ -12,6 +12,7 @@ buildscript {
         classpath Plugins.android
         classpath Plugins.androidJunitJacoco
         classpath Plugins.kotlin
+        classpath Plugins.proguard
         classpath Plugins.sonarQube
         classpath Plugins.unMock
         classpath Plugins.versions
