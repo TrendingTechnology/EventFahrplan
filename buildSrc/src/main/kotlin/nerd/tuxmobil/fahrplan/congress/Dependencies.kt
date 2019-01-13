@@ -57,7 +57,7 @@ object Libs {
         const val threeTenBp = "1.4.4"
         const val tracedroid = "1.4"
         const val truth = "1.0.1"
-        const val workManager = "1.0.0-alpha09"
+        const val workManager = "1.0.1"
     }
 
     const val annotation = "androidx.annotation:annotation:${Versions.annotation}"
