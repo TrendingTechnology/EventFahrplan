@@ -57,7 +57,7 @@ object Libs {
         const val threeTenBp = "1.4.4"
         const val tracedroid = "1.4"
         const val truth = "1.0.1"
-        const val workManager = "1.0.1"
+        const val workManager = "2.3.4"
     }
 
     const val annotation = "androidx.annotation:annotation:${Versions.annotation}"
@@ -89,5 +89,5 @@ object Libs {
     const val threeTenBp = "org.threeten:threetenbp:${Versions.threeTenBp}"
     const val tracedroid = "org.ligi:tracedroid:${Versions.tracedroid}"
     const val truth = "com.google.truth:truth:${Versions.truth}"
-    const val workManager = "android.arch.work:work-runtime-ktx:${Versions.workManager}"
+    const val workManager = "androidx.work:work-runtime-ktx:${Versions.workManager}"
 }
