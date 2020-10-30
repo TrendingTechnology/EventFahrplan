@@ -10,11 +10,11 @@ class HighlightExtensionsTest {
     @Test
     fun toHighlightAppModel() {
         val highlightDatabaseModel = HighlightDatabaseModel(
-                sessionId = 2342,
+                sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c37",
                 isHighlight = true
         )
         val highlightAppModel = Highlight(
-                sessionId = 2342,
+                sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c37",
                 isHighlight = true
         )
         assertThat(highlightDatabaseModel.toHighlightAppModel()).isEqualTo(highlightAppModel)

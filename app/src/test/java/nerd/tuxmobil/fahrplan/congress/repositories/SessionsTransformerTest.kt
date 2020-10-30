@@ -21,10 +21,10 @@ class SessionsTransformerTest {
     @Test
     fun `rooms are ordered by roomIndex`() {
         val sessionsInDatabase = listOf(
-                createSession(sessionId = "L0", roomName = "Four", roomIndex = 2342),
-                createSession(sessionId = "L1", roomName = "Two", roomIndex = 1),
-                createSession(sessionId = "L2", roomName = "One", roomIndex = 0),
-                createSession(sessionId = "L3", roomName = "Three", roomIndex = 4)
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c00", roomName = "Four", roomIndex = 2342),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c01", roomName = "Two", roomIndex = 1),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c02", roomName = "One", roomIndex = 0),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c03", roomName = "Three", roomIndex = 4)
         )
 
         val scheduleData = transformer.transformSessions(dayIndex = 0, sessions = sessionsInDatabase)
@@ -36,11 +36,11 @@ class SessionsTransformerTest {
     @Test
     fun `prioritized rooms are first in list`() {
         val sessionsInDatabase = listOf(
-                createSession(sessionId = "L0", roomName = "Chaos-West Bühne", roomIndex = 11),
-                createSession(sessionId = "L1", roomName = "c-base", roomIndex = 12),
-                createSession(sessionId = "L2", roomName = "Eliza", roomIndex = 13),
-                createSession(sessionId = "L3", roomName = "Borg", roomIndex = 14),
-                createSession(sessionId = "L4", roomName = "Ada", roomIndex = 15)
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c00", roomName = "Chaos-West Bühne", roomIndex = 11),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c01", roomName = "c-base", roomIndex = 12),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c02", roomName = "Eliza", roomIndex = 13),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c03", roomName = "Borg", roomIndex = 14),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c04", roomName = "Ada", roomIndex = 15)
         )
 
         val scheduleData = transformer.transformSessions(dayIndex = 0, sessions = sessionsInDatabase)
@@ -52,24 +52,24 @@ class SessionsTransformerTest {
     @Test
     fun `same roomIndex does not influence RoomData contents`() {
         val sessionsInDatabase = listOf(
-                createSession(sessionId = "L0", roomName = "Borg", roomIndex = 2),
-                createSession(sessionId = "L1", roomName = "Broken One", roomIndex = 2),
-                createSession(sessionId = "L2", roomName = "Broken Two", roomIndex = 2)
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c00", roomName = "Borg", roomIndex = 2),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c01", roomName = "Broken One", roomIndex = 2),
+                createSession(sessionId = "be9979c4-18bc-52bb-9480-2c0ac2782c02", roomName = "Broken Two", roomIndex = 2)
         )
 
         val scheduleData = transformer.transformSessions(dayIndex = 0, sessions = sessionsInDatabase)
 
         with(scheduleData.roomDataList[0]) {
             assertThat(roomName).isEqualTo("Borg")
-            assertThat(sessions[0].sessionId).isEqualTo("L0")
+            assertThat(sessions[0].sessionId).isEqualTo("be9979c4-18bc-52bb-9480-2c0ac2782c00")
         }
         with(scheduleData.roomDataList[1]) {
             assertThat(roomName).isEqualTo("Broken One")
-            assertThat(sessions[0].sessionId).isEqualTo("L1")
+            assertThat(sessions[0].sessionId).isEqualTo("be9979c4-18bc-52bb-9480-2c0ac2782c01")
         }
         with(scheduleData.roomDataList[2]) {
             assertThat(roomName).isEqualTo("Broken Two")
-            assertThat(sessions[0].sessionId).isEqualTo("L2")
+            assertThat(sessions[0].sessionId).isEqualTo("be9979c4-18bc-52bb-9480-2c0ac2782c02")
         }
     }
 

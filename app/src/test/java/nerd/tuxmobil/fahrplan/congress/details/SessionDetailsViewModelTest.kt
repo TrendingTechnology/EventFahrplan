@@ -24,8 +24,8 @@ class SessionDetailsViewModelTest {
     companion object {
         private const val UNKNOWN_MENU_ITEM_ID = Int.MIN_VALUE
         private const val SAMPLE_URL = "http://example.com"
-        private const val ACTUAL_SESSION_ID = "S1"
-        private const val EXPECTED_SESSION_ID = "S1"
+        private const val ACTUAL_SESSION_ID = "be9979c4-18bc-52bb-9480-2c0ac2782c01"
+        private const val EXPECTED_SESSION_ID = "be9979c4-18bc-52bb-9480-2c0ac2782c01"
     }
 
     @Before
@@ -75,10 +75,10 @@ class SessionDetailsViewModelTest {
 
     @Test
     fun `onOptionsMenuItemSelected flags highlight and invokes updateHighlight, notifyHighlightsChanged, refreshUI`() {
-        val actualSession = Session("S2").apply { highlight = false }
-        val expectedSession = Session("S2").apply { highlight = true }
-        whenever(repository.readSessionBySessionId("S2")) doReturn actualSession
-        val viewModel = SessionDetailsViewModel(repository, "S2", viewActionHandler)
+        val actualSession = Session("be9979c4-18bc-52bb-9480-2c0ac2782c02").apply { highlight = false }
+        val expectedSession = Session("be9979c4-18bc-52bb-9480-2c0ac2782c02").apply { highlight = true }
+        whenever(repository.readSessionBySessionId("be9979c4-18bc-52bb-9480-2c0ac2782c02")) doReturn actualSession
+        val viewModel = SessionDetailsViewModel(repository, "be9979c4-18bc-52bb-9480-2c0ac2782c02", viewActionHandler)
         assertThat(viewModel.onOptionsMenuItemSelected(R.id.menu_item_flag_as_favorite)).isTrue()
         // TODO Simplify by comparing objects as soon as "highlight" is part of Session#equals.
         assertThat(actualSession.highlight).isEqualTo(expectedSession.highlight)
@@ -89,10 +89,10 @@ class SessionDetailsViewModelTest {
 
     @Test
     fun `onOptionsMenuItemSelected unflags highlight and invokes updateHighlight, notifyHighlightsChanged, refreshUI`() {
-        val actualSession = Session("S3").apply { highlight = true }
-        val expectedSession = Session("S3").apply { highlight = false }
-        whenever(repository.readSessionBySessionId("S3")) doReturn actualSession
-        val viewModel = SessionDetailsViewModel(repository, "S3", viewActionHandler)
+        val actualSession = Session("be9979c4-18bc-52bb-9480-2c0ac2782c03").apply { highlight = true }
+        val expectedSession = Session("be9979c4-18bc-52bb-9480-2c0ac2782c03").apply { highlight = false }
+        whenever(repository.readSessionBySessionId("be9979c4-18bc-52bb-9480-2c0ac2782c03")) doReturn actualSession
+        val viewModel = SessionDetailsViewModel(repository, "be9979c4-18bc-52bb-9480-2c0ac2782c03", viewActionHandler)
         assertThat(viewModel.onOptionsMenuItemSelected(R.id.menu_item_unflag_as_favorite)).isTrue()
         // TODO Simplify by comparing objects as soon as "highlight" is part of Session#equals.
         assertThat(actualSession.highlight).isEqualTo(expectedSession.highlight)
@@ -122,10 +122,10 @@ class SessionDetailsViewModelTest {
 
     @Test
     fun `onOptionsMenuItemSelected invokes navigateToRoom with URI`() {
-        val actualSession = Session("S4").apply { room = "GARDEN" }
-        whenever(repository.readSessionBySessionId("S4")) doReturn actualSession
+        val actualSession = Session("be9979c4-18bc-52bb-9480-2c0ac2782c04").apply { room = "GARDEN" }
+        whenever(repository.readSessionBySessionId("be9979c4-18bc-52bb-9480-2c0ac2782c04")) doReturn actualSession
         val toC3NavRoomName: Session.() -> String = { this.room.toLowerCase() }
-        val viewModel = SessionDetailsViewModel(repository, "S4", viewActionHandler,
+        val viewModel = SessionDetailsViewModel(repository, "be9979c4-18bc-52bb-9480-2c0ac2782c04", viewActionHandler,
                 c3NavBaseUrl = "https://c3nav.foo/", toC3NavRoomName = toC3NavRoomName)
         assertThat(viewModel.onOptionsMenuItemSelected(R.id.menu_item_navigate)).isTrue()
         verifyInvokedOnce(viewActionHandler).navigateToRoom("https://c3nav.foo/garden".toUri())
@@ -139,9 +139,9 @@ class SessionDetailsViewModelTest {
     @Test
     fun `formattedLinks returns HTML formatted links`() {
         val links = "[VOC projects](https://www.voc.com/projects/),[POC](https://poc.com/QXut1XBymAk)"
-        val session = Session("S5").apply { this.links = links }
-        whenever(repository.readSessionBySessionId("S5")) doReturn session
-        val viewModel = SessionDetailsViewModel(repository, "S5", viewActionHandler)
+        val session = Session("be9979c4-18bc-52bb-9480-2c0ac2782c05").apply { this.links = links }
+        whenever(repository.readSessionBySessionId("be9979c4-18bc-52bb-9480-2c0ac2782c05")) doReturn session
+        val viewModel = SessionDetailsViewModel(repository, "be9979c4-18bc-52bb-9480-2c0ac2782c05", viewActionHandler)
         val expectedFormattedLinks = """<a href="https://www.voc.com/projects/">VOC projects</a><br><a href="https://poc.com/QXut1XBymAk">POC</a>"""
         assertThat(viewModel.formattedLinks).isEqualTo(expectedFormattedLinks)
     }
@@ -149,7 +149,7 @@ class SessionDetailsViewModelTest {
     @Test
     fun `sessionLink returns an empty string when no session URL is composed`() {
         val toSessionUrl: Session.() -> String = { "" }
-        val viewModel = SessionDetailsViewModel(repository, "S6", viewActionHandler, toSessionUrl = toSessionUrl)
+        val viewModel = SessionDetailsViewModel(repository, "be9979c4-18bc-52bb-9480-2c0ac2782c06", viewActionHandler, toSessionUrl = toSessionUrl)
         assertThat(viewModel.sessionLink).isEmpty()
     }
 
@@ -157,8 +157,8 @@ class SessionDetailsViewModelTest {
     fun `sessionLink returns the HTML formatted session link`() {
         val toSessionUrl: Session.() -> String = { "https://conference.net/program/${this.sessionId}.html" }
         val session = Session("famous-talk")
-        whenever(repository.readSessionBySessionId("S7")) doReturn session
-        val viewModel = SessionDetailsViewModel(repository, "S7", viewActionHandler, toSessionUrl = toSessionUrl)
+        whenever(repository.readSessionBySessionId("be9979c4-18bc-52bb-9480-2c0ac2782c07")) doReturn session
+        val viewModel = SessionDetailsViewModel(repository, "be9979c4-18bc-52bb-9480-2c0ac2782c07", viewActionHandler, toSessionUrl = toSessionUrl)
         val expectedSessionLink = """<a href="https://conference.net/program/famous-talk.html">https://conference.net/program/famous-talk.html</a>"""
         assertThat(viewModel.sessionLink).isEqualTo(expectedSessionLink)
     }
