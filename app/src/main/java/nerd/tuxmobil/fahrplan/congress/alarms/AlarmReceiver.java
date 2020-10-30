@@ -31,6 +31,8 @@ public final class AlarmReceiver extends BroadcastReceiver {
 
     private static final String LOG_TAG = "AlarmReceiver";
 
+    private static final int DEFAULT_REQUEST_CODE = 0;
+
     @SuppressWarnings("java:S2245")
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -40,7 +42,6 @@ public final class AlarmReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ALARM_SESSION)) {
             String sessionId = intent.getStringExtra(BundleKeys.ALARM_SESSION_ID);
             Log.d(LOG_TAG, "sessionId = " + sessionId + ", intent = " + intent);
-            int lid = Integer.parseInt(sessionId);
             int day = intent.getIntExtra(BundleKeys.ALARM_DAY, 1);
             long when = intent
                     .getLongExtra(BundleKeys.ALARM_START_TIME, System.currentTimeMillis());
@@ -51,7 +52,7 @@ public final class AlarmReceiver extends BroadcastReceiver {
 
             Intent launchIntent = MainActivity.createLaunchIntent(context, sessionId, day);
             PendingIntent contentIntent = PendingIntent
-                    .getActivity(context, lid, launchIntent, PendingIntent.FLAG_ONE_SHOT);
+                    .getActivity(context, DEFAULT_REQUEST_CODE, launchIntent, PendingIntent.FLAG_ONE_SHOT);
 
             NotificationHelper notificationHelper = new NotificationHelper(context);
             Uri soundUri = appRepository.readAlarmToneUri();
