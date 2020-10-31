@@ -379,6 +379,14 @@ object AppRepository {
         sessionsDatabaseRepository.insert(list)
     }
 
+    /**
+     * Returns a new notification ID for the given session ID.
+     */
+    fun readNotificationIdForSessionId(sessionId: String): Int {
+        val values = sessionId.toContentValues()
+        return sessionsDatabaseRepository.insert(values)
+    }
+
     fun readMeta() =
             metaDatabaseRepository.query().toMetaAppModel()
 

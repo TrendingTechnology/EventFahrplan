@@ -55,7 +55,8 @@ public final class AlarmReceiver extends BroadcastReceiver {
             NotificationCompat.Builder builder = notificationHelper.getSessionAlarmNotificationBuilder(contentIntent, title, when, soundUri);
             boolean isInsistentAlarmsEnabled = appRepository.readInsistentAlarmsEnabled();
             MyApp.LogDebug(LOG_TAG, "Preference 'isInsistentAlarmsEnabled' = " + isInsistentAlarmsEnabled + ".");
-            notificationHelper.notify(NotificationHelper.SESSION_ALARM_ID, builder, isInsistentAlarmsEnabled);
+            int newNotificationId = appRepository.readNotificationIdForSessionId(sessionId);
+            notificationHelper.notify(newNotificationId, builder, isInsistentAlarmsEnabled);
 
             appRepository.deleteAlarmForSessionId(sessionId);
 
