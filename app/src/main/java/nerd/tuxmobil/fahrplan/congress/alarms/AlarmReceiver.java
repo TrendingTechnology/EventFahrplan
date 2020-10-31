@@ -11,6 +11,8 @@ import androidx.core.app.NotificationCompat;
 
 import org.ligi.tracedroid.logging.Log;
 
+import java.util.Random;
+
 import nerd.tuxmobil.fahrplan.congress.MyApp;
 import nerd.tuxmobil.fahrplan.congress.autoupdate.UpdateService;
 import nerd.tuxmobil.fahrplan.congress.contract.BundleKeys;
@@ -29,6 +31,7 @@ public final class AlarmReceiver extends BroadcastReceiver {
 
     private static final String LOG_TAG = "AlarmReceiver";
 
+    @SuppressWarnings("java:S2245")
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -55,7 +58,7 @@ public final class AlarmReceiver extends BroadcastReceiver {
             NotificationCompat.Builder builder = notificationHelper.getSessionAlarmNotificationBuilder(contentIntent, title, when, soundUri);
             boolean isInsistentAlarmsEnabled = appRepository.readInsistentAlarmsEnabled();
             MyApp.LogDebug(LOG_TAG, "Preference 'isInsistentAlarmsEnabled' = " + isInsistentAlarmsEnabled + ".");
-            notificationHelper.notify(NotificationHelper.SESSION_ALARM_ID, builder, isInsistentAlarmsEnabled);
+            notificationHelper.notify(new Random().nextInt(), builder, isInsistentAlarmsEnabled);
 
             appRepository.deleteAlarmForSessionId(sessionId);
 
