@@ -155,10 +155,11 @@ class SessionDetailsViewModelTest {
 
     @Test
     fun `sessionLink returns the HTML formatted session link`() {
-        val toSessionUrl: Session.() -> String = { "https://conference.net/program/${this.sessionId}.html" }
-        val session = Session("famous-talk")
+        val session = Session("be9979c4-18bc-52bb-9480-2c0ac2782c07").apply {
+            url = "https://conference.net/program/famous-talk.html"
+        }
         whenever(repository.readSessionBySessionId("be9979c4-18bc-52bb-9480-2c0ac2782c07")) doReturn session
-        val viewModel = SessionDetailsViewModel(repository, "be9979c4-18bc-52bb-9480-2c0ac2782c07", viewActionHandler, toSessionUrl = toSessionUrl)
+        val viewModel = SessionDetailsViewModel(repository, "be9979c4-18bc-52bb-9480-2c0ac2782c07", viewActionHandler)
         val expectedSessionLink = """<a href="https://conference.net/program/famous-talk.html">https://conference.net/program/famous-talk.html</a>"""
         assertThat(viewModel.sessionLink).isEqualTo(expectedSessionLink)
     }

@@ -15,27 +15,32 @@ class SessionUrlComposerTest {
         private const val PENTABARF_SESSION_URL_TEMPLATE =
                 "https://fosdem.org/2018/schedule/event/%1\$s/"
 
-        private val PENTABARF_SESSION = Session("7294").apply {
+        private val PENTABARF_SESSION = Session("be9979c4-18bc-52bb-9480-2c0ac2782c37").apply {
             url = ""
             slug = "keynotes_welcome"
         }
 
-        private val FRAB_SESSION = Session("9985").apply {
+        private val FRAB_SESSION = Session("be9979c4-18bc-52bb-9480-2c0ac2782c42").apply {
             url = "https://fahrplan.events.ccc.de/congress/2018/Fahrplan/events/9985.html"
             slug = "35c3-9985-opening_ceremony"
         }
 
-        private val PRETALX_SESSION = Session("32").apply {
+        private val FRAB_SESSION_WITHOUT_URL = Session("be9979c4-18bc-52bb-9480-2c0ac2782c66").apply {
+            url = ""
+            slug = "35c3-1925-opening_ceremony"
+        }
+
+        private val PRETALX_SESSION = Session("be9979c4-18bc-52bb-9480-2c0ac2782c3e").apply {
             url = "https://fahrplan.chaos-west.de/35c3chaoswest/talk/KDYQEB"
             slug = "KDYQEB"
         }
 
-        private val ENGELSYSTEM_SHIFT_SESSION_WITHOUT_URL = Session("7771").apply {
+        private val ENGELSYSTEM_SHIFT_SESSION_WITHOUT_URL = Session("be9979c4-18bc-52bb-9480-2c0ac2782c31").apply {
             room = AppRepository.ENGELSYSTEM_ROOM_NAME
             url = ""
         }
 
-        private val ENGELSYSTEM_SHIFT_SESSION_WITH_URL = Session("7772").apply {
+        private val ENGELSYSTEM_SHIFT_SESSION_WITH_URL = Session("be9979c4-18bc-52bb-9480-2c0ac2782c32").apply {
             room = AppRepository.ENGELSYSTEM_ROOM_NAME
             url = "https://helpful.to/the/angel"
         }
@@ -55,6 +60,15 @@ class SessionUrlComposerTest {
     fun getSessionUrlWithPentabarfSessionWithPentabarfBackend() {
         assertThat(SessionUrlComposer(PENTABARF_SESSION, PENTABARF_SESSION_URL_TEMPLATE, ServerBackendType.PENTABARF.name)
                 .getSessionUrl()).isEqualTo("https://fosdem.org/2018/schedule/event/keynotes_welcome/")
+    }
+
+    @Test
+    fun getSessionUrlWithFrabSessionWithoutUrl() {
+        try {
+            SessionUrlComposer(FRAB_SESSION_WITHOUT_URL, FRAB_SESSION_URL_TEMPLATE, ServerBackendType.FRAB.name).getSessionUrl()
+        } catch (e: IllegalStateException) {
+            assertThat(e.message).isEqualTo("Missing 'url' value for session ${FRAB_SESSION_WITHOUT_URL.sessionId}.")
+        }
     }
 
     @Test
