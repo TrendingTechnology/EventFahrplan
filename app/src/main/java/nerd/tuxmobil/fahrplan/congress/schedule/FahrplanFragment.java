@@ -283,7 +283,7 @@ public class FahrplanFragment extends Fragment implements SessionViewEventsHandl
 
         if (!sessionsOfDay.isEmpty()) {
             // TODO: Move this to AppRepository and include the result in ScheduleData
-            conference.calculateTimeFrame(sessionsOfDay, dateUTC -> new Moment(dateUTC).getMinuteOfDay());
+            conference.calculateTimeFrame(sessionsOfDay, dateUTC -> Moment.ofEpochMilli(dateUTC).getMinuteOfDay());
             MyApp.LogDebug(LOG_TAG, "Conference = " + conference);
         }
 
@@ -406,7 +406,7 @@ public class FahrplanFragment extends Fragment implements SessionViewEventsHandl
         if (currentDayIndex != MyApp.dateInfos.getIndexOfToday()) {
             return;
         }
-        Moment nowMoment = new Moment();
+        Moment nowMoment = Moment.now();
         HorizontalSnapScrollView horiz = null;
         //noinspection SwitchStatementWithTooFewBranches
         switch (getResources().getConfiguration().orientation) {
@@ -517,7 +517,7 @@ public class FahrplanFragment extends Fragment implements SessionViewEventsHandl
         int printTime = time;
         LinearLayout timeTextColumn = requireViewByIdCompat(getView(), R.id.times_layout);
         timeTextColumn.removeAllViews();
-        Moment nowMoment = new Moment();
+        Moment nowMoment = Moment.now();
         View timeTextView;
         int timeTextViewHeight = 3 * getNormalizedBoxHeight(getResources(), scale, LOG_TAG);
         TimeSegment timeSegment;
@@ -609,7 +609,7 @@ public class FahrplanFragment extends Fragment implements SessionViewEventsHandl
     }
 
     public void buildNavigationMenu() {
-        Moment currentDate = new Moment().startOfDay();
+        Moment currentDate = Moment.now().startOfDay();
         MyApp.LogDebug(LOG_TAG, "Today is " + currentDate.toUTCDateTime().toLocalDate());
         String[] dayMenuEntries = NavigationMenuEntriesGenerator.getDayMenuEntries(
                 MyApp.meta.getNumDays(),
